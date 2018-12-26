@@ -16,7 +16,7 @@ import java.util.List;
 public class WechatMoudle {
     public interface WechatCallback extends HttpFinishCallback {
         void setWechat(List<WXItemBean> list);
-        void setMoewWechat(List<WXItemBean> list);
+        void setMoewWechat(List<WXItemBean> list,String wrd);
     }
     public void getWechat(String key, int num, int page, final WechatCallback wechatCallback){
         wechatCallback.setShowProgressbar();
@@ -29,13 +29,13 @@ public class WechatMoudle {
         });
     }
 
-    public void getMoewWechat(String key, int num, int page,String word, final WechatCallback wechatCallback){
+    public void getMoewWechat(String key, int num, int page, final String word, final WechatCallback wechatCallback){
         wechatCallback.setShowProgressbar();
         MyApp.getWechatServer().getWXHotSearch(key,num,page,word).compose(RxUtils.<WXHttpResponse<List<WXItemBean>>>rxObserableSchedulerHelper()).subscribe(new BaseObserver<WXHttpResponse<List<WXItemBean>>>(wechatCallback) {
             @Override
             public void onNext(WXHttpResponse<List<WXItemBean>> value) {
                 List<WXItemBean> newslist = value.getNewslist();
-                wechatCallback.setMoewWechat(newslist);
+                wechatCallback.setMoewWechat(newslist,word);
             }
         });
     }

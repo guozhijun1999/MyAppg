@@ -20,7 +20,7 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private MaterialSearchView mViewSearch;
+    public static MaterialSearchView mViewSearch;
     private MenuItem mMenuItem;
     private MenuItem searchMenuItem;
 

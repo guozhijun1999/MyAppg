@@ -29,9 +29,9 @@ public class WechatPresenter<V extends WechatView> extends IBasePresenter<V> imp
     }
 
     @Override
-    public void setMoewWechat(List<WXItemBean> list) {
+    public void setMoewWechat(List<WXItemBean> list,String wrd) {
         if (mView!=null){
-            mView.showMoewWechat(list);
+            mView.showMoewWechat(list,wrd);
         }
     }
 

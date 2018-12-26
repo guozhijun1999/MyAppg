@@ -54,6 +54,12 @@ public class WechatAdapter extends RecyclerView.Adapter<WechatAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
+    public void addData2(List<WXItemBean> list) {
+        mList.clear();
+        mList.addAll(list);
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView mImage;

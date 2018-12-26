@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface WechatView extends BaseView {
     void showWechat(List<WXItemBean> list);
-    void showMoewWechat(List<WXItemBean> list);
+    void showMoewWechat(List<WXItemBean> list,String wrd);
 }
