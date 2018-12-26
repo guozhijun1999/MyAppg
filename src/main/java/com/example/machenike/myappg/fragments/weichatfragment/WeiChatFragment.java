@@ -57,6 +57,7 @@ public class WeiChatFragment extends BaseFragment<WechatView, WechatPresenter<We
         viewMain.setAdapter(mWechatAdapter);
         viewMain.setLoadingListener(this);
         presenter.getWechat("52b7ec3471ac3bec6846577e79f20e4c", 10, page);
+        presenter.getMoewWechat("52b7ec3471ac3bec6846577e79f20e4c", 10, page,"");
     }
 
     @Override

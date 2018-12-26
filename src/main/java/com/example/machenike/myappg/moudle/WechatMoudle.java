@@ -28,4 +28,15 @@ public class WechatMoudle {
             }
         });
     }
+
+    public void getMoewWechat(String key, int num, int page,String word, final WechatCallback wechatCallback){
+        wechatCallback.setShowProgressbar();
+        MyApp.getWechatServer().getWXHotSearch(key,num,page,word).compose(RxUtils.<WXHttpResponse<List<WXItemBean>>>rxObserableSchedulerHelper()).subscribe(new BaseObserver<WXHttpResponse<List<WXItemBean>>>(wechatCallback) {
+            @Override
+            public void onNext(WXHttpResponse<List<WXItemBean>> value) {
+                List<WXItemBean> newslist = value.getNewslist();
+                wechatCallback.setMoewWechat(newslist);
+            }
+        });
+    }
 }

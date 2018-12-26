@@ -15,6 +15,11 @@ public class WechatPresenter<V extends WechatView> extends IBasePresenter<V> imp
             mWechatMoudle.getWechat(key,num,page,this);
         }
     }
+    public void getMoewWechat(String key,int num,int page,String word) {
+        if (mView!=null){
+            mWechatMoudle.getMoewWechat(key,num,page,word,this);
+        }
+    }
 
     @Override
     public void setWechat(List<WXItemBean> list) {
@@ -25,7 +30,9 @@ public class WechatPresenter<V extends WechatView> extends IBasePresenter<V> imp
 
     @Override
     public void setMoewWechat(List<WXItemBean> list) {
-
+        if (mView!=null){
+            mView.showMoewWechat(list);
+        }
     }
 
     @Override
