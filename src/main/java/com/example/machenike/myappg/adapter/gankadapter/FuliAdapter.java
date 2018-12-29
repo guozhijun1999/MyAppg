@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.machenike.myappg.R;
+import com.example.machenike.myappg.beans.gank.GankHttpResponse;
 import com.example.machenike.myappg.beans.gank.GankItemBean;
 import com.example.machenike.myappg.utils.ImageLoader;
 
@@ -17,10 +18,10 @@ import java.util.List;
 
 public class FuliAdapter extends RecyclerView.Adapter<FuliAdapter.ViewHolder> {
     private Context context;
-    private List<GankItemBean> mList;
+    private List<GankHttpResponse.ResultsBean> mList;
     private LayoutInflater mInflater;
 
-    public FuliAdapter(Context context, List<GankItemBean> list) {
+    public FuliAdapter(Context context, List<GankHttpResponse.ResultsBean> list) {
         this.context = context;
         mList = list;
         mInflater = LayoutInflater.from(context);
@@ -34,9 +35,9 @@ public class FuliAdapter extends RecyclerView.Adapter<FuliAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull FuliAdapter.ViewHolder holder, int position) {
-        GankItemBean gankItemBean = mList.get(position);
+        GankHttpResponse.ResultsBean resultsBean = mList.get(position);
 //        ImageLoader.load(context,gankItemBean.getUrl(),holder.mImage);
-        Glide.with(context).load(gankItemBean.getUrl()).into(holder.mImage);
+        Glide.with(context).load(resultsBean.getUrl()).into(holder.mImage);
     }
 
     @Override
@@ -44,7 +45,7 @@ public class FuliAdapter extends RecyclerView.Adapter<FuliAdapter.ViewHolder> {
         return mList.size();
     }
 
-    public void addData(List<GankItemBean> list, int page) {
+    public void addData(List<GankHttpResponse.ResultsBean> list, int page) {
         if (page==1){
             mList.clear();
         }

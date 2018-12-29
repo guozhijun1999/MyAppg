@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.machenike.myappg.R;
 import com.example.machenike.myappg.adapter.gankadapter.AndroidAdapter;
 import com.example.machenike.myappg.base.fragment.BaseFragment;
+import com.example.machenike.myappg.beans.gank.GankHttpResponse;
 import com.example.machenike.myappg.beans.gank.GankItemBean;
 import com.example.machenike.myappg.presenter.GankPresenter;
 import com.example.machenike.myappg.utils.ImageLoader;
@@ -44,7 +45,7 @@ public class IosFragment extends BaseFragment<GankView, GankPresenter<GankView>>
     XRecyclerView viewMain;
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefresh;
-    private List<GankItemBean> mList=new ArrayList<>();
+    private List<GankItemBean.ResultsBean> mList=new ArrayList<>();
     private AndroidAdapter mAndroidAdapter;
     private int page = 1;
     private int position = 0;
@@ -76,19 +77,19 @@ public class IosFragment extends BaseFragment<GankView, GankPresenter<GankView>>
     }
 
     @Override
-    public void showGank(List<GankItemBean> list) {
+    public void showGank(List<GankItemBean.ResultsBean> list) {
         mAndroidAdapter.addData(list,page);
         viewMain.loadMoreComplete();
     }
 
     @Override
-    public void showGankRandom(List<GankItemBean> list) {
-        ImageLoader.load(mActivity,list.get(position).getUrl().toString(),ivTechBlur);
+    public void showGankRandom(List<GankHttpResponse.ResultsBean> list) {
+        ImageLoader.load(mActivity,list.get(position).getUrl(),ivTechBlur);
         tvTechCopyright.setText("by:"+list.get(position).getWho());
     }
 
     @Override
-    public void showGankGirl(List<GankItemBean> list) {
+    public void showGankGirl(List<GankHttpResponse.ResultsBean> list) {
 
     }
 

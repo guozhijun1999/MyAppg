@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.example.machenike.myappg.R;
 import com.example.machenike.myappg.adapter.gankadapter.FuliAdapter;
 import com.example.machenike.myappg.base.fragment.BaseFragment;
+import com.example.machenike.myappg.beans.gank.GankHttpResponse;
 import com.example.machenike.myappg.beans.gank.GankItemBean;
 import com.example.machenike.myappg.presenter.GankPresenter;
 import com.example.machenike.myappg.view.GankView;
@@ -35,7 +36,7 @@ public class FuliFragment extends BaseFragment<GankView, GankPresenter<GankView>
     XRecyclerView viewMain;
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefresh;
-    private List<GankItemBean> mList=new ArrayList<>();
+    private List<GankHttpResponse.ResultsBean> mList=new ArrayList<>();
     private FuliAdapter mFuliAdapter;
     private int page = 1;
 
@@ -66,17 +67,17 @@ public class FuliFragment extends BaseFragment<GankView, GankPresenter<GankView>
     }
 
     @Override
-    public void showGank(List<GankItemBean> list) {
+    public void showGank(List<GankItemBean.ResultsBean> list) {
 
     }
 
     @Override
-    public void showGankRandom(List<GankItemBean> list) {
+    public void showGankRandom(List<GankHttpResponse.ResultsBean> list) {
 
     }
 
     @Override
-    public void showGankGirl(List<GankItemBean> list) {
+    public void showGankGirl(List<GankHttpResponse.ResultsBean> list) {
         mFuliAdapter.addData(list,page);
         viewMain.loadMoreComplete();
     }

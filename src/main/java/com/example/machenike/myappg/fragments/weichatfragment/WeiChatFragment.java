@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.machenike.myappg.MainActivity;
 import com.example.machenike.myappg.R;
@@ -38,6 +39,7 @@ public class WeiChatFragment extends BaseFragment<WechatView, WechatPresenter<We
     private int page = 1;
     private String word;
     private WechatAdapter mWechatAdapter;
+    private Boolean sousu = true;
 
     public WeiChatFragment() {
         // Required empty public constructor
@@ -61,14 +63,16 @@ public class WeiChatFragment extends BaseFragment<WechatView, WechatPresenter<We
         viewMain.setAdapter(mWechatAdapter);
         viewMain.setLoadingListener(this);
         presenter.getWechat("52b7ec3471ac3bec6846577e79f20e4c", 10, page);
-        presenter.getMoewWechat("52b7ec3471ac3bec6846577e79f20e4c", 10, page,word);
+
 
         MainActivity.mViewSearch.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                sousu = false;
                 Log.e("qwe123",query.toString());
-
-                query=word;
+                word=query;
+                presenter.getMoewWechat("52b7ec3471ac3bec6846577e79f20e4c", 10, page,word);
+                Toast.makeText(mActivity,"搜索成功成功",Toast.LENGTH_SHORT).show();
                 return false;
             }
 
@@ -88,7 +92,6 @@ public class WeiChatFragment extends BaseFragment<WechatView, WechatPresenter<We
 
     @Override
     public void showMoewWechat(List<WXItemBean> list,String word) {
-
         mWechatAdapter.addData2(list);
         Log.e("qwe456",list.toString());
     }
@@ -116,7 +119,12 @@ public class WeiChatFragment extends BaseFragment<WechatView, WechatPresenter<We
     @Override
     public void onLoadMore() {
         page++;
-        presenter.getWechat("52b7ec3471ac3bec6846577e79f20e4c", 10, page);
+       // if(sousu == true){
+            presenter.getWechat("52b7ec3471ac3bec6846577e79f20e4c", 10, page);
+       // }else{
+           // presenter.getMoewWechat("52b7ec3471ac3bec6846577e79f20e4c", 10, page,word);
+     //   }
+
 
     }
 

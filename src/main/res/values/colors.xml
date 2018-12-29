@@ -11,4 +11,5 @@
     <color name="comment_reply">#9ba4a3</color>
     <color name="drawer_header_text">#2c2c2c</color>
     <color name="fab_bg">#ff6940</color>
+    <color name="topic_text">#afafaf</color>
 </resources>

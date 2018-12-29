@@ -11,35 +11,35 @@ import java.util.List;
 
 public class GankMoudle {
     public interface GankCallback extends HttpFinishCallback{
-        void setGank(List<GankItemBean> list);
-        void setGankRandom(List<GankItemBean> list);
-        void setGankGirl(List<GankItemBean> list);
+        void setGank(List<GankItemBean.ResultsBean> list);
+        void setGankRandom(List<GankHttpResponse.ResultsBean> list);
+        void setGankGirl(List<GankHttpResponse.ResultsBean> list);
     }
     public void getGank(String tech, int num, int page, final GankCallback gankCallback){
-        MyApp.getGankServer().getTechList(tech,num,page).compose(RxUtils.<GankHttpResponse<List<GankItemBean>>>rxObserableSchedulerHelper()).subscribe(new BaseObserver<GankHttpResponse<List<GankItemBean>>>(gankCallback) {
+        MyApp.getGankServer().getTechList(tech,num,page).compose(RxUtils.<GankItemBean>rxObserableSchedulerHelper()).subscribe(new BaseObserver<GankItemBean>(gankCallback) {
             @Override
-            public void onNext(GankHttpResponse<List<GankItemBean>> value) {
-                List<GankItemBean> results = value.getResults();
+            public void onNext(GankItemBean value) {
+                List<GankItemBean.ResultsBean> results = value.getResults();
                 gankCallback.setGank(results);
             }
         });
     }
 
     public void getGankRandom( int num ,final GankCallback gankCallback){
-        MyApp.getGankServer().getRandomGirl(num).compose(RxUtils.<GankHttpResponse<List<GankItemBean>>>rxObserableSchedulerHelper()).subscribe(new BaseObserver<GankHttpResponse<List<GankItemBean>>>(gankCallback) {
+        MyApp.getGankServer().getRandomGirl(num).compose(RxUtils.<GankHttpResponse>rxObserableSchedulerHelper()).subscribe(new BaseObserver<GankHttpResponse>(gankCallback) {
             @Override
-            public void onNext(GankHttpResponse<List<GankItemBean>> value) {
-                List<GankItemBean> results = value.getResults();
+            public void onNext(GankHttpResponse value) {
+                List<GankHttpResponse.ResultsBean> results = value.getResults();
                 gankCallback.setGankRandom(results);
             }
         });
     }
 
     public void getGankGirl( int num ,int page,final GankCallback gankCallback){
-        MyApp.getGankServer().getGirlList(num,page).compose(RxUtils.<GankHttpResponse<List<GankItemBean>>>rxObserableSchedulerHelper()).subscribe(new BaseObserver<GankHttpResponse<List<GankItemBean>>>(gankCallback) {
+        MyApp.getGankServer().getGirlList(num,page).compose(RxUtils.<GankHttpResponse>rxObserableSchedulerHelper()).subscribe(new BaseObserver<GankHttpResponse>(gankCallback) {
             @Override
-            public void onNext(GankHttpResponse<List<GankItemBean>> value) {
-                List<GankItemBean> results = value.getResults();
+            public void onNext(GankHttpResponse value) {
+                List<GankHttpResponse.ResultsBean> results = value.getResults();
                 gankCallback.setGankGirl(results);
             }
         });

@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import com.example.machenike.myappg.fragments.gankfragment.GankFragment;
 import com.example.machenike.myappg.fragments.weichatfragment.WeiChatFragment;
+import com.example.machenike.myappg.fragments.xitufragment.XituFragment;
 import com.example.machenike.myappg.fragments.zhihufragment.ZhihuFragment;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -23,14 +24,16 @@ public class MainActivity extends AppCompatActivity
     public static MaterialSearchView mViewSearch;
     private MenuItem mMenuItem;
     private MenuItem searchMenuItem;
+    public static Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mViewSearch = findViewById(R.id.view_search);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(mToolbar);
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -55,6 +58,7 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fl_content,new ZhihuFragment());
         fragmentTransaction.commit();
+
     }
 
     @Override
@@ -103,32 +107,41 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        mToolbar.setTitle("知乎日报");
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         switch (id) {
             case R.id.drawer_zhihu:
                 fragmentTransaction.replace(R.id.fl_content, new ZhihuFragment());
                 searchMenuItem.setVisible(false);
+                mToolbar.setTitle("知乎日报");
                 break;
             case R.id.drawer_wechat:
                 fragmentTransaction.replace(R.id.fl_content, new WeiChatFragment());
                 searchMenuItem.setVisible(true);
+                mToolbar.setTitle("微信精选");
                 break;
             case R.id.drawer_gank:
                 fragmentTransaction.replace(R.id.fl_content,new GankFragment());
-                searchMenuItem.setVisible(false);
+                searchMenuItem.setVisible(true);
+                mToolbar.setTitle("干货集中营");
                 break;
             case R.id.drawer_data:
+                fragmentTransaction.replace(R.id.fl_content,new XituFragment());
                 searchMenuItem.setVisible(false);
+                mToolbar.setTitle("稀土掘金");
                 break;
             case R.id.drawer_vtex:
                 searchMenuItem.setVisible(false);
+                mToolbar.setTitle("V2EX");
                 break;
             case R.id.drawer_like:
                 searchMenuItem.setVisible(false);
+                mToolbar.setTitle("收藏");
                 break;
             case R.id.drawer_setting:
                 searchMenuItem.setVisible(false);
+                mToolbar.setTitle("设置");
                 break;
         }
         fragmentTransaction.commit();

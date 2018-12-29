@@ -20,11 +20,11 @@ import java.util.List;
 
 public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.ViewHolder> {
     private Context context;
-    private List<GankItemBean> mList;
+    private List<GankItemBean.ResultsBean> mList;
     private LayoutInflater mInflater;
 
 
-    public AndroidAdapter(Context context, List<GankItemBean> list) {
+    public AndroidAdapter(Context context, List<GankItemBean.ResultsBean> list) {
         this.context = context;
         this.mList = list;
         mInflater = LayoutInflater.from(context);
@@ -37,8 +37,8 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        GankItemBean gankItemBean = mList.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        final GankItemBean.ResultsBean resultsBean = mList.get(position);
 //        if (tech.equals(GankFragment.tabTitle[0])){
 //            Log.e("321321",GankFragment.tabTitle[0].toString());
 //            holder.mImage.setImageResource(R.mipmap.ic_android);
@@ -47,9 +47,16 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.ViewHold
 //        }else if (tech.equals(GankFragment.tabTitle[2])){
 //            holder.mImage.setImageResource(R.mipmap.ic_web);
 //        }
-        holder.mTitle.setText(gankItemBean.getDesc());
-        holder.mAuthor.setText(gankItemBean.getWho());
-        holder.mTime.setText(DateUtil.formatDateTime(DateUtil.subStandardTime(gankItemBean.getPublishedAt()),true));
+        holder.mTitle.setText(resultsBean.getDesc());
+        holder.mAuthor.setText(resultsBean.getWho());
+        holder.mTime.setText(DateUtil.formatDateTime(DateUtil.subStandardTime(resultsBean.getPublishedAt()),true));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnItmeDainji.ondianji(resultsBean,v,position);
+            }
+        });
     }
 
     @Override
@@ -57,7 +64,7 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.ViewHold
         return mList.size();
     }
 
-    public void addData(List<GankItemBean> list, int page) {
+    public void addData(List<GankItemBean.ResultsBean> list, int page) {
         if (page == 1){
             mList.clear();
         }
@@ -79,5 +86,14 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.ViewHold
             mAuthor = itemView.findViewById(R.id.tv_tech_author);
             mTime = itemView.findViewById(R.id.tv_tech_time);
         }
+    }
+    private OnItmeDainji mOnItmeDainji;
+
+    public void setOnItmeDainji(OnItmeDainji onItmeDainji) {
+        mOnItmeDainji = onItmeDainji;
+    }
+
+    public interface OnItmeDainji{
+        void ondianji(GankItemBean.ResultsBean resultsBean,View view,int position);
     }
 }

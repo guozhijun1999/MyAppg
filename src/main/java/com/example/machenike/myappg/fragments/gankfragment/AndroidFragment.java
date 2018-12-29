@@ -1,6 +1,7 @@
 package com.example.machenike.myappg.fragments.gankfragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
@@ -14,8 +15,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.machenike.myappg.R;
+import com.example.machenike.myappg.activitys.gankactivity.GanActivity;
 import com.example.machenike.myappg.adapter.gankadapter.AndroidAdapter;
 import com.example.machenike.myappg.base.fragment.BaseFragment;
+import com.example.machenike.myappg.beans.gank.GankHttpResponse;
 import com.example.machenike.myappg.beans.gank.GankItemBean;
 import com.example.machenike.myappg.presenter.GankPresenter;
 import com.example.machenike.myappg.utils.ImageLoader;
@@ -33,7 +36,7 @@ import butterknife.Unbinder;
  * A simple {@link Fragment} subclass.
  */
 public class
-AndroidFragment extends BaseFragment<GankView, GankPresenter<GankView>> implements GankView, XRecyclerView.LoadingListener {
+AndroidFragment extends BaseFragment<GankView, GankPresenter<GankView>> implements GankView, XRecyclerView.LoadingListener, AndroidAdapter.OnItmeDainji {
 
 
     @BindView(R.id.iv_tech_blur)
@@ -49,7 +52,7 @@ AndroidFragment extends BaseFragment<GankView, GankPresenter<GankView>> implemen
     private int page = 1;
     private int position = 0;
     String tech;
-    private List<GankItemBean> mList=new ArrayList<>();
+    private List<GankItemBean.ResultsBean> mList=new ArrayList<>();
     private AndroidAdapter mAndroidAdapter;
 
     public AndroidFragment() {
@@ -73,26 +76,27 @@ AndroidFragment extends BaseFragment<GankView, GankPresenter<GankView>> implemen
         mAndroidAdapter = new AndroidAdapter(mActivity,mList);
         viewMain.setAdapter(mAndroidAdapter);
         viewMain.setLoadingListener(this);
-
-
+        mAndroidAdapter.setOnItmeDainji(this);
         presenter.getGankRandom(10);
         presenter.getGank("Android",10,page);
+
     }
 
     @Override
-    public void showGank(List<GankItemBean> list) {
+    public void showGank(List<GankItemBean.ResultsBean> list) {
+
         mAndroidAdapter.addData(list,page);
         viewMain.loadMoreComplete();
     }
 
     @Override
-    public void showGankRandom(List<GankItemBean> list) {
+    public void showGankRandom(List<GankHttpResponse.ResultsBean> list) {
         ImageLoader.load(mActivity,list.get(position).getUrl().toString(),ivTechBlur);
         tvTechCopyright.setText("by:"+list.get(position).getWho());
     }
 
     @Override
-    public void showGankGirl(List<GankItemBean> list) {
+    public void showGankGirl(List<GankHttpResponse.ResultsBean> list) {
 
     }
 
@@ -122,5 +126,13 @@ AndroidFragment extends BaseFragment<GankView, GankPresenter<GankView>> implemen
     public void onLoadMore() {
         page++;
         presenter.getGank("Android",10,page);
+    }
+
+    @Override
+    public void ondianji(GankItemBean.ResultsBean resultsBean, View view, int position) {
+        Intent intent=new Intent(mActivity, GanActivity.class);
+        intent.putExtra("title",resultsBean.getDesc());
+        intent.putExtra("url",resultsBean.getUrl());
+        startActivity(intent);
     }
 }

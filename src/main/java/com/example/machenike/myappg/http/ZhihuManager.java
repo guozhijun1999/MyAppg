@@ -1,7 +1,7 @@
 package com.example.machenike.myappg.http;
 
-import com.example.machenike.myappg.beans.zhihu.DailyBeforeListBean;
 import com.example.machenike.myappg.beans.zhihu.DailyListBean;
+import com.example.machenike.myappg.http.api.ZhihuServer;
 
 import io.reactivex.Observable;
 

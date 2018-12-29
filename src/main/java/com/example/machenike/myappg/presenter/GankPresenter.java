@@ -1,6 +1,7 @@
 package com.example.machenike.myappg.presenter;
 
 import com.example.machenike.myappg.base.presenter.IBasePresenter;
+import com.example.machenike.myappg.beans.gank.GankHttpResponse;
 import com.example.machenike.myappg.beans.gank.GankItemBean;
 import com.example.machenike.myappg.moudle.GankMoudle;
 import com.example.machenike.myappg.view.GankView;
@@ -28,21 +29,21 @@ public class GankPresenter<V extends GankView> extends IBasePresenter<V> impleme
     }
 
     @Override
-    public void setGank(List<GankItemBean> list) {
+    public void setGank(List<GankItemBean.ResultsBean> list) {
         if (mView!=null){
             mView.showGank(list);
         }
     }
 
     @Override
-    public void setGankGirl(List<GankItemBean> list) {
+    public void setGankGirl(List<GankHttpResponse.ResultsBean> list) {
         if (mView!=null){
             mView.showGankGirl(list);
         }
     }
 
     @Override
-    public void setGankRandom(List<GankItemBean> list) {
+    public void setGankRandom(List<GankHttpResponse.ResultsBean> list) {
         if (mView!=null){
             mView.showGankRandom(list);
         }
@@ -50,16 +51,12 @@ public class GankPresenter<V extends GankView> extends IBasePresenter<V> impleme
 
     @Override
     public void setShowProgressbar() {
-        if(mView!=null){
-            mView.showProgressbar();
-        }
+
     }
 
     @Override
     public void setHideProgressbar() {
-        if(mView!=null){
-            mView.hideProgressbar();
-        }
+
     }
 
     @Override
